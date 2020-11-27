@@ -2,7 +2,9 @@ package coinsorter.textui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -12,13 +14,20 @@ import coinsorter.validation.ConstraintValidator;
 import coinsorter.validation.IntegerStringConstraintValidator;
 import coinsorter.validation.NotBlankConstraintValidator;
 
-public class InputSupport {
-    private InputSupport() {
-        // Private constructor
+public class Console {
+    private BufferedReader bufferedReader;
+    private PrintStream printStream;
+
+    public static Console getDefault() {
+        return new Console(System.in, System.out);
     }
 
-    public static String readInput() {
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    public Console(final InputStream inputStream, final PrintStream printStream) {
+        this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        this.printStream = printStream;
+    }
+
+    public String readLine() {
         try {
             return bufferedReader.readLine();
         } catch (final IOException e) {
@@ -26,14 +35,13 @@ public class InputSupport {
         }
     }
 
-    @SafeVarargs
-    public static String promptForString(final String prompt,
+    public String promptForString(final String prompt,
             final ConstraintValidator<String>... constraintValidators) {
         List<String> constraintViolationMessages = Collections.emptyList();
         String value = null;
         do {
-            System.out.println(prompt);
-            final String input = readInput();
+            printStream.println(prompt);
+            final String input = readLine();
 
             constraintViolationMessages = Arrays.stream(constraintValidators)
                     .filter(constraintValidator -> constraintValidator.isInvalid(input))
@@ -42,16 +50,14 @@ public class InputSupport {
             if (constraintViolationMessages.isEmpty()) {
                 value = input;
             } else {
-                System.out
-                        .println("Invalid input: \"" + input + "\". " + String.join(", ", constraintViolationMessages));
+                println("Invalid input: \"" + input + "\". " + String.join(", ", constraintViolationMessages));
             }
         } while (constraintViolationMessages.isEmpty() == false);
 
         return value;
     }
 
-    @SafeVarargs
-    public static int promptForInt(final String prompt, final ConstraintValidator<Integer>... constraintValidators) {
+    public int promptForInt(final String prompt, final ConstraintValidator<Integer>... constraintValidators) {
         List<String> constraintViolationMessages = Collections.emptyList();
         int value = 0;
         do {
@@ -66,11 +72,30 @@ public class InputSupport {
             if (constraintViolationMessages.isEmpty()) {
                 value = integer;
             } else {
-                System.out.println(
-                        "Invalid input: \"" + integer + "\". " + String.join(", ", constraintViolationMessages));
+                println("Invalid input: \"" + integer + "\". " + String.join(", ", constraintViolationMessages));
             }
         } while (constraintViolationMessages.isEmpty() == false);
 
         return value;
+    }
+
+    public void print(int i) {
+        printStream.print(i);
+    }
+
+    public void print(String s) {
+        printStream.print(s);
+    }
+
+    public void println(int i) {
+        printStream.println(i);
+    }
+
+    public void println(String x) {
+        printStream.println(x);
+    }
+
+    public PrintStream format(String format, Object... args) {
+        return printStream.format(format, args);
     }
 }

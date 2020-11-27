@@ -13,22 +13,20 @@ import coinsorter.textui.Menu.SubMenuItem;
 public class CoinSorterUi {
     private final Deque<Menu> menuStack = new ArrayDeque<>();
 
-    private final CoinSorter coinSorter;
-
     public CoinSorterUi() {
-        coinSorter = new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10));
+        final CoinSorter coinSorter = new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10));
+        final Console console = Console.getDefault();
 
         final Menu menu = new Menu.Builder().withHeader("***Coin Sorter - Main Menu***")
-                .withCommand("Coin calculator", new CalculateDenominationCommand(coinSorter))
-                .withCommand("Multiple coin calculator", new MakeLooseChangeCommand(coinSorter))
-                .withCommand("Print coin list", new PrintCoinListCommand(coinSorter))
-                .withSubMenu("Set details",
-                        new Menu.Builder().withHeader("***Set Details Sub-Menu***")
-                                .withCommand("Set currency", new SetCurrencyCommand(coinSorter))
-                                .withCommand("Set minimum coin input value", new SetMinimumValueCommand(coinSorter))
-                                .withCommand("Set maximum coin input value", new SetMaximumValueCommand(coinSorter))
-                                .withExitText("Return to main menu").build())
-                .withCommand("Display program configurations", new DisplayConfigurationCommand(coinSorter))
+                .withCommand("Coin calculator", new CalculateDenominationCommand(coinSorter, console))
+                .withCommand("Multiple coin calculator", new MakeLooseChangeCommand(coinSorter, console))
+                .withCommand("Print coin list", new PrintCoinListCommand(coinSorter, console))
+                .withSubMenu("Set details", new Menu.Builder().withHeader("***Set Details Sub-Menu***")
+                        .withCommand("Set currency", new SetCurrencyCommand(coinSorter, console))
+                        .withCommand("Set minimum coin input value", new SetMinimumValueCommand(coinSorter, console))
+                        .withCommand("Set maximum coin input value", new SetMaximumValueCommand(coinSorter, console))
+                        .withExitText("Return to main menu").build())
+                .withCommand("Display program configurations", new DisplayConfigurationCommand(coinSorter, console))
                 .withExitText("Quit the program").build();
 
         menuStack.push(menu);

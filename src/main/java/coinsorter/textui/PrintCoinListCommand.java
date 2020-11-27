@@ -7,14 +7,16 @@ import coinsorter.CoinSorter;
 
 public class PrintCoinListCommand implements Command {
     private final CoinSorter coinSorter;
+    private final Console console;
 
-    public PrintCoinListCommand(final CoinSorter coinSorter) {
+    public PrintCoinListCommand(final CoinSorter coinSorter, final Console console) {
         this.coinSorter = coinSorter;
+        this.console = console;
     }
 
     @Override
     public void execute() {
-        System.out.println("Denominations in use are: " + coinSorter.getDenominations().stream()
+        console.println("Denominations in use are: " + coinSorter.getDenominations().stream()
                 .sorted(Comparator.reverseOrder()).map(String::valueOf).collect(Collectors.joining(", ")));
     }
 }
