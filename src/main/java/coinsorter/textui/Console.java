@@ -78,23 +78,23 @@ public class Console {
         return value;
     }
 
-    public void print(int i) {
+    public void print(final int i) {
         printStream.print(i);
     }
 
-    public void print(String s) {
+    public void print(final String s) {
         printStream.print(s);
     }
 
-    public void println(int i) {
+    public void println(final int i) {
         printStream.println(i);
     }
 
-    public void println(String x) {
+    public void println(final String x) {
         printStream.println(x);
     }
 
-    public PrintStream format(String format, Object... args) {
+    public PrintStream format(final String format, final Object... args) {
         return printStream.format(format, args);
     }
 }

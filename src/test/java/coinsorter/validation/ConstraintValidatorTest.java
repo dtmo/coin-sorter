@@ -9,16 +9,18 @@ import org.mockito.Mockito;
 class ConstraintValidatorTest {
     @Test
     void testIsInvalidWhenValid() throws Exception {
-        final ConstraintValidator<String> trueConstraintValidator = Mockito.mock(ConstraintValidator.class);
+        // Mockito spy so the interface default method is executed
+        final ConstraintValidator<String> trueConstraintValidator = Mockito.spy(ConstraintValidator.class);
         Mockito.doReturn(true).when(trueConstraintValidator).isValid(Mockito.anyString());
 
         assertTrue(trueConstraintValidator.isValid("value"));
         assertFalse(trueConstraintValidator.isInvalid("value"));
     }
-    
+
     @Test
     void testIsInvalidWhenInvalid() throws Exception {
-        final ConstraintValidator<String> falseConstraintValidator = Mockito.mock(ConstraintValidator.class);
+        // Mockito spy so the interface default method is executed
+        final ConstraintValidator<String> falseConstraintValidator = Mockito.spy(ConstraintValidator.class);
         Mockito.doReturn(false).when(falseConstraintValidator).isValid(Mockito.anyString());
 
         assertFalse(falseConstraintValidator.isValid("value"));
