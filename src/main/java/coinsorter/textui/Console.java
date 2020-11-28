@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,14 +36,14 @@ public class Console {
     }
 
     public String promptForString(final String prompt,
-            final ConstraintValidator<String>... constraintValidators) {
+            final Collection<ConstraintValidator<String>> constraintValidators) {
         List<String> constraintViolationMessages = Collections.emptyList();
         String value = null;
         do {
             printStream.println(prompt);
             final String input = readLine();
 
-            constraintViolationMessages = Arrays.stream(constraintValidators)
+            constraintViolationMessages = constraintValidators.stream()
                     .filter(constraintValidator -> constraintValidator.isInvalid(input))
                     .map(constraintValidator -> constraintValidator.getConstraintViolationMessage(input))
                     .collect(Collectors.toList());
@@ -57,15 +57,15 @@ public class Console {
         return value;
     }
 
-    public int promptForInt(final String prompt, final ConstraintValidator<Integer>... constraintValidators) {
+    public int promptForInt(final String prompt, final Collection<ConstraintValidator<Integer>> constraintValidators) {
         List<String> constraintViolationMessages = Collections.emptyList();
         int value = 0;
         do {
-            final String integerString = promptForString(prompt, NotBlankConstraintValidator.INSTANCE,
-                    IntegerStringConstraintValidator.INSTANCE);
+            final String integerString = promptForString(prompt,
+                    List.of(NotBlankConstraintValidator.INSTANCE, IntegerStringConstraintValidator.INSTANCE));
             final int integer = Integer.parseInt(integerString);
 
-            constraintViolationMessages = Arrays.stream(constraintValidators)
+            constraintViolationMessages = constraintValidators.stream()
                     .filter(constraintValidator -> constraintValidator.isInvalid(integer))
                     .map(constraintValidator -> constraintValidator.getConstraintViolationMessage(integer))
                     .collect(Collectors.toList());

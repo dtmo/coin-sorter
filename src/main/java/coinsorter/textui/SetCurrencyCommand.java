@@ -1,5 +1,7 @@
 package coinsorter.textui;
 
+import java.util.List;
+
 import coinsorter.CoinSorter;
 import coinsorter.validation.NotBlankConstraintValidator;
 
@@ -16,7 +18,7 @@ public class SetCurrencyCommand implements Command {
     public void execute() {
         final String currency = console.promptForString(
                 "Current currency is: " + coinSorter.getCurrency() + "\nPlease enter a new currency: ",
-                NotBlankConstraintValidator.INSTANCE);
+                List.of(NotBlankConstraintValidator.INSTANCE));
 
         coinSorter.setCurrency(currency);
     }

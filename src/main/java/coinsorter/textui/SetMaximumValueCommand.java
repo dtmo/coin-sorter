@@ -1,5 +1,7 @@
 package coinsorter.textui;
 
+import java.util.List;
+
 import coinsorter.CoinSorter;
 import coinsorter.validation.MinimumValueConstraintValidator;
 
@@ -17,7 +19,7 @@ public class SetMaximumValueCommand implements Command {
         console.println("Current maximum coin input is: " + coinSorter.getMaximumValue());
 
         final int maximumValue = console.promptForInt("Please enter a new maximum coin input: ",
-                new MinimumValueConstraintValidator(coinSorter.getMinimumValue()));
+                List.of(new MinimumValueConstraintValidator(coinSorter.getMinimumValue())));
 
         coinSorter.setMaximumValue(maximumValue);
     }

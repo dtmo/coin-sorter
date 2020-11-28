@@ -1,5 +1,7 @@
 package coinsorter.textui;
 
+import java.util.List;
+
 import coinsorter.CoinSorter;
 import coinsorter.LooseChange;
 import coinsorter.validation.MaximumValueConstraintValidator;
@@ -20,12 +22,12 @@ public class CalculateDenominationCommand implements Command {
                                 "Calculate the number of coins of a denomination for a total value\nPlease enter a total value of coins to sort between "
                                                 + coinSorter.getMinimumValue() + " and " + coinSorter.getMaximumValue()
                                                 + ": ",
-                                new MinimumValueConstraintValidator(coinSorter.getMinimumValue()),
-                                new MaximumValueConstraintValidator(coinSorter.getMaximumValue()));
+                                List.of(new MinimumValueConstraintValidator(coinSorter.getMinimumValue()),
+                                                new MaximumValueConstraintValidator(coinSorter.getMaximumValue())));
 
                 final int denominationValue = console.promptForInt(
                                 "Please enter the denomination into which to calculate: ",
-                                new MinimumValueConstraintValidator(0));
+                                List.of(new MinimumValueConstraintValidator(0)));
 
                 final LooseChange result = coinSorter.convertToDenomination(totalValue, denominationValue);
 
