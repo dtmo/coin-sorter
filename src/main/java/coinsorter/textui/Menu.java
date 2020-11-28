@@ -10,36 +10,51 @@ import java.util.stream.Collectors;
 
 import coinsorter.validation.EnumerationConstraintValidator;
 
+/**
+ * Menu represents a set of options from which the user may make a selection.
+ */
 public class Menu {
     private final String header;
     private final SortedMap<String, MenuItem> menuItems;
 
+    /**
+     * Constructs a new instance of Menu.
+     * 
+     * @param header    The menu header.
+     * @param menuItems The menu items indexed by their identifiers.
+     */
     public Menu(final String header, final SortedMap<String, MenuItem> menuItems) {
         this.header = header;
         this.menuItems = menuItems;
     }
 
+    /**
+     * Returns the menu header.
+     * 
+     * @return The menu header.
+     */
     public String getHeader() {
         return header;
     }
 
+    /**
+     * Returns the menu items indexed by their identifiers.
+     * 
+     * @return The menu items indexed by their identifiers.
+     */
     public SortedMap<String, MenuItem> getMenuItems() {
         return Collections.unmodifiableSortedMap(menuItems);
     }
 
-    public MenuItem select(final Console console) {
-        MenuItem menuItem;
-        do {
-            final int optionsLength = String.valueOf(menuItems.size()).length();
-            final String menuBody = menuItems.entrySet().stream().map(entry -> String
-                    .format("%" + optionsLength + "s - %s", entry.getKey(), entry.getValue().getText()))
-                    .collect(Collectors.joining("\n"));
+    public MenuItem selectMenuItem(final Console console) {
+        final int optionsLength = String.valueOf(menuItems.size()).length();
+        final String menuBody = menuItems.entrySet().stream()
+                .map(entry -> String.format("%" + optionsLength + "s - %s", entry.getKey(), entry.getValue().getText()))
+                .collect(Collectors.joining("\n"));
 
-            final String menuSelection = console.promptForString(String.format("\n%s\n\n%s", header, menuBody),
-                    Set.of(new EnumerationConstraintValidator<String>(menuItems.keySet()))).trim();
-            menuItem = menuItems.get(menuSelection);
-        } while (menuItem == null);
-        return menuItem;
+        final String menuSelection = console.promptForValidText(String.format("\n%s\n\n%s", header, menuBody),
+                Set.of(new EnumerationConstraintValidator<String>(menuItems.keySet()))).trim();
+        return menuItems.get(menuSelection);
     }
 
     public static abstract class MenuItem {

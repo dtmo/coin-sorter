@@ -13,7 +13,7 @@ class MakeLooseChangeCommandTest {
         final CoinSorter coinSorter = Mockito.spy(new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10)));
         final Console console = Mockito.spy(Console.getDefault());
 
-        Mockito.doReturn(5432).doReturn(10).when(console).promptForInt(Mockito.anyString(), Mockito.any());
+        Mockito.doReturn(5432).doReturn(10).when(console).promptForValidInt(Mockito.anyString(), Mockito.any());
 
         final MakeLooseChangeCommand command = new MakeLooseChangeCommand(coinSorter, console);
 

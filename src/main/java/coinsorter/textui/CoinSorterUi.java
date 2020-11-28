@@ -37,7 +37,7 @@ public class CoinSorterUi {
         while (menuStack.isEmpty() == false) {
             final Menu currentMenu = menuStack.peek();
 
-            final MenuItem selection = currentMenu.select(console);
+            final MenuItem selection = currentMenu.selectMenuItem(console);
 
             if (selection instanceof SubMenuItem) {
                 final SubMenuItem subMenuItem = (SubMenuItem) selection;

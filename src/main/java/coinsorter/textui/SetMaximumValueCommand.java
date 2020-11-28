@@ -18,7 +18,7 @@ public class SetMaximumValueCommand implements Command {
     public void execute() {
         console.println("Current maximum coin input is: " + coinSorter.getMaximumValue());
 
-        final int maximumValue = console.promptForInt("Please enter a new maximum coin input: ",
+        final int maximumValue = console.promptForValidInt("Please enter a new maximum coin input: ",
                 List.of(new MinimumValueConstraintValidator(coinSorter.getMinimumValue())));
 
         coinSorter.setMaximumValue(maximumValue);

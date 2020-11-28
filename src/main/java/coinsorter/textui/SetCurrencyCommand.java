@@ -16,7 +16,7 @@ public class SetCurrencyCommand implements Command {
 
     @Override
     public void execute() {
-        final String currency = console.promptForString(
+        final String currency = console.promptForValidText(
                 "Current currency is: " + coinSorter.getCurrency() + "\nPlease enter a new currency: ",
                 List.of(NotBlankConstraintValidator.INSTANCE));
 

@@ -35,7 +35,7 @@ class ConsoleTest {
 
         Mockito.doReturn("input").when(bufferedReader).readLine();
 
-        final String value = console.promptForString("prompt", Collections.emptySet());
+        final String value = console.promptForValidText("prompt", Collections.emptySet());
 
         Mockito.verify(bufferedReader, Mockito.times(1)).readLine();
 
@@ -50,7 +50,7 @@ class ConsoleTest {
 
         Mockito.doReturn("").doReturn("valid").when(bufferedReader).readLine();
 
-        final String value = console.promptForString("prompt", Set.of(NotBlankConstraintValidator.INSTANCE));
+        final String value = console.promptForValidText("prompt", Set.of(NotBlankConstraintValidator.INSTANCE));
 
         Mockito.verify(bufferedReader, Mockito.times(2)).readLine();
 
@@ -65,7 +65,7 @@ class ConsoleTest {
 
         Mockito.doReturn("1234").when(bufferedReader).readLine();
 
-        final int value = console.promptForInt("prompt", Collections.emptySet());
+        final int value = console.promptForValidInt("prompt", Collections.emptySet());
 
         Mockito.verify(bufferedReader, Mockito.times(1)).readLine();
 
@@ -80,7 +80,7 @@ class ConsoleTest {
 
         Mockito.doReturn("abcd").doReturn("1234").when(bufferedReader).readLine();
 
-        final int value = console.promptForInt("prompt", Set.of());
+        final int value = console.promptForValidInt("prompt", Set.of());
 
         Mockito.verify(bufferedReader, Mockito.times(2)).readLine();
 
@@ -95,7 +95,7 @@ class ConsoleTest {
 
         Mockito.doReturn("200").doReturn("50").when(bufferedReader).readLine();
 
-        final int value = console.promptForInt("prompt", Set.of(new MaximumValueConstraintValidator(100)));
+        final int value = console.promptForValidInt("prompt", Set.of(new MaximumValueConstraintValidator(100)));
 
         Mockito.verify(bufferedReader, Mockito.times(2)).readLine();
 
@@ -144,16 +144,5 @@ class ConsoleTest {
         console.println("value");
 
         Mockito.verify(printStream, Mockito.times(1)).println(Mockito.eq("value"));
-    }
-
-    @Test
-    void testFormat() throws Exception {
-        final BufferedReader bufferedReader = Mockito.mock(BufferedReader.class);
-        final PrintStream printStream = Mockito.mock(PrintStream.class);
-        final Console console = new Console(bufferedReader, printStream);
-
-        console.format("template", 1, "a");
-
-        Mockito.verify(printStream, Mockito.times(1)).format(Mockito.eq("template"), Mockito.eq(1), Mockito.eq("a"));
     }
 }

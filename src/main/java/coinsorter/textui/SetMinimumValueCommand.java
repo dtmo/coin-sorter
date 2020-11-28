@@ -19,7 +19,7 @@ public class SetMinimumValueCommand implements Command {
     public void execute() {
         System.out.println("Current minimum coin input is: " + coinSorter.getMinimumValue());
 
-        final int minimumValue = console.promptForInt("Please enter a new minimum coin input: ",
+        final int minimumValue = console.promptForValidInt("Please enter a new minimum coin input: ",
                 List.of(new MinimumValueConstraintValidator(0),
                         new MaximumValueConstraintValidator(coinSorter.getMaximumValue())));
 
