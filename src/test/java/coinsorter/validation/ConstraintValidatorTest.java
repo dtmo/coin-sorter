@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 class ConstraintValidatorTest {
     @Test
     void testIsInvalidWhenValid() throws Exception {
-        final ConstraintValidator<String> trueConstraintValidator = Mockito.spy(ConstraintValidator.class);
+        final ConstraintValidator<String> trueConstraintValidator = Mockito.mock(ConstraintValidator.class);
         Mockito.doReturn(true).when(trueConstraintValidator).isValid(Mockito.anyString());
 
         assertTrue(trueConstraintValidator.isValid("value"));
@@ -18,7 +18,7 @@ class ConstraintValidatorTest {
     
     @Test
     void testIsInvalidWhenInvalid() throws Exception {
-        final ConstraintValidator<String> falseConstraintValidator = Mockito.spy(ConstraintValidator.class);
+        final ConstraintValidator<String> falseConstraintValidator = Mockito.mock(ConstraintValidator.class);
         Mockito.doReturn(false).when(falseConstraintValidator).isValid(Mockito.anyString());
 
         assertFalse(falseConstraintValidator.isValid("value"));
