@@ -11,11 +11,12 @@ import coinsorter.textui.Menu.MenuItem;
 import coinsorter.textui.Menu.SubMenuItem;
 
 public class CoinSorterUi {
+    private final Console console;
     private final Deque<Menu> menuStack = new ArrayDeque<>();
 
     public CoinSorterUi() {
         final CoinSorter coinSorter = new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10));
-        final Console console = Console.getDefault();
+        console = Console.getDefault();
 
         final Menu menu = new Menu.Builder().withHeader("***Coin Sorter - Main Menu***")
                 .withCommand("Coin calculator", new CalculateDenominationCommand(coinSorter, console))
@@ -36,7 +37,7 @@ public class CoinSorterUi {
         while (menuStack.isEmpty() == false) {
             final Menu currentMenu = menuStack.peek();
 
-            final MenuItem selection = currentMenu.select();
+            final MenuItem selection = currentMenu.select(console);
 
             if (selection instanceof SubMenuItem) {
                 final SubMenuItem subMenuItem = (SubMenuItem) selection;

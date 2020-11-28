@@ -1,20 +1,18 @@
 package coinsorter.textui;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+
+import coinsorter.validation.EnumerationConstraintValidator;
 
 public class Menu {
     private final String header;
     private final SortedMap<String, MenuItem> menuItems;
-    private final PrintStream printStream = System.out;
 
     public Menu(final String header, final SortedMap<String, MenuItem> menuItems) {
         this.header = header;
@@ -29,25 +27,17 @@ public class Menu {
         return Collections.unmodifiableSortedMap(menuItems);
     }
 
-    public MenuItem select() {
+    public MenuItem select(final Console console) {
         MenuItem menuItem;
         do {
-            printStream.print("\n");
-            printStream.print(header);
-            printStream.print("\n\n");
-
             final int optionsLength = String.valueOf(menuItems.size()).length();
-            for (final Map.Entry<String, MenuItem> entry : menuItems.entrySet()) {
-                printStream.format("%" + optionsLength + "s - %s\n", entry.getKey(), entry.getValue().getText());
-            }
+            final String menuBody = menuItems.entrySet().stream().map(entry -> String
+                    .format("%" + optionsLength + "s - %s", entry.getKey(), entry.getValue().getText()))
+                    .collect(Collectors.joining("\n"));
 
-            final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            try {
-                final String input = reader.readLine();
-                menuItem = menuItems.get(input.trim());
-            } catch (final IOException e) {
-                throw new IllegalStateException("Could not read from System.in", e);
-            }
+            final String menuSelection = console.promptForString(String.format("\n%s\n\n%s", header, menuBody),
+                    Set.of(new EnumerationConstraintValidator<String>(menuItems.keySet()))).trim();
+            menuItem = menuItems.get(menuSelection);
         } while (menuItem == null);
         return menuItem;
     }
