@@ -7,17 +7,18 @@ import org.mockito.Mockito;
 
 import coinsorter.CoinSorter;
 
-class SetCurrencyCommandTest {
+class MakeLooseChangeCommandTest {
     @Test
     void testExecute() throws Exception {
         final CoinSorter coinSorter = Mockito.spy(new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10)));
         final Console console = Mockito.spy(Console.getDefault());
-        Mockito.doReturn("USD").when(console).promptForString(Mockito.anyString(), Mockito.any());
 
-        final SetCurrencyCommand command = new SetCurrencyCommand(coinSorter, console);
+        Mockito.doReturn(5432).doReturn(10).when(console).promptForInt(Mockito.anyString(), Mockito.any());
+
+        final MakeLooseChangeCommand command = new MakeLooseChangeCommand(coinSorter, console);
 
         command.execute();
 
-        Mockito.verify(coinSorter, Mockito.times(1)).setCurrency("USD");
+        Mockito.verify(coinSorter, Mockito.times(1)).convertToDenominations(Mockito.eq(5432), Mockito.eq(10));
     }
 }

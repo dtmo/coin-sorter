@@ -7,17 +7,16 @@ import org.mockito.Mockito;
 
 import coinsorter.CoinSorter;
 
-class SetCurrencyCommandTest {
+class PrintCoinListCommandTest {
     @Test
     void testExecute() throws Exception {
         final CoinSorter coinSorter = Mockito.spy(new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10)));
         final Console console = Mockito.spy(Console.getDefault());
-        Mockito.doReturn("USD").when(console).promptForString(Mockito.anyString(), Mockito.any());
 
-        final SetCurrencyCommand command = new SetCurrencyCommand(coinSorter, console);
+        final PrintCoinListCommand command = new PrintCoinListCommand(coinSorter, console);
 
         command.execute();
 
-        Mockito.verify(coinSorter, Mockito.times(1)).setCurrency("USD");
+        Mockito.verify(coinSorter, Mockito.times(1)).getDenominations();
     }
 }

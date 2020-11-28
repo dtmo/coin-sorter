@@ -7,7 +7,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * LooseChange represents a collection of coins of various denominations.
+ */
 public class LooseChange {
+    /**
+     * Calculates the quantities of each denomination to, as closely as possible,
+     * represent the given total value. If the specified denominations cannot
+     * represent the total value exactly, then they will represent the nearest value
+     * that is not greater than the specified total value.
+     * 
+     * @param value         The target total value to represent with the specified
+     *                      denominations.
+     * @param denominations The denominations of which to use multiples to represent
+     *                      the total value.
+     * @return A new LooseChange instance that represents the quantities of
+     *         denominations used.
+     */
     public static LooseChange toDenominations(final int value, final Set<Integer> denominations) {
         List<Integer> orderedDenominations = new ArrayList<>(denominations);
         Collections.sort(orderedDenominations, Collections.reverseOrder());

@@ -2,7 +2,6 @@ package coinsorter.textui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Collection;
@@ -19,11 +18,11 @@ public class Console {
     private PrintStream printStream;
 
     public static Console getDefault() {
-        return new Console(System.in, System.out);
+        return new Console(new BufferedReader(new InputStreamReader(System.in)), System.out);
     }
 
-    public Console(final InputStream inputStream, final PrintStream printStream) {
-        this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+    public Console(final BufferedReader bufferedReader, final PrintStream printStream) {
+        this.bufferedReader = bufferedReader;
         this.printStream = printStream;
     }
 
