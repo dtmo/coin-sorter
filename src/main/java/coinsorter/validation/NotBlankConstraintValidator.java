@@ -1,6 +1,12 @@
 package coinsorter.validation;
 
+/**
+ * NotBlankConstraintValidator validates that a string is not blank.
+ */
 public class NotBlankConstraintValidator implements ConstraintValidator<String> {
+    /**
+     * A static instance for convenience.
+     */
     public static final NotBlankConstraintValidator INSTANCE = new NotBlankConstraintValidator();
 
     @Override

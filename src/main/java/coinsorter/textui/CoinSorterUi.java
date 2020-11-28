@@ -10,19 +10,25 @@ import coinsorter.textui.Menu.ExitMenuItem;
 import coinsorter.textui.Menu.MenuItem;
 import coinsorter.textui.Menu.SubMenuItem;
 
+/**
+ * CoinSorterUi provides a text based user interface.
+ */
 public class CoinSorterUi {
     private final Console console;
     private final Deque<Menu> menuStack = new ArrayDeque<>();
 
+    /**
+     * Constructs a new instance of CoinSorterUi.
+     */
     public CoinSorterUi() {
         final CoinSorter coinSorter = new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10));
         console = Console.getDefault();
 
-        final Menu menu = new Menu.Builder().withHeader("***Coin Sorter - Main Menu***")
+        final Menu menu = new Menu.Builder().withHeaderText("***Coin Sorter - Main Menu***")
                 .withCommand("Coin calculator", new CalculateDenominationCommand(coinSorter, console))
                 .withCommand("Multiple coin calculator", new MakeLooseChangeCommand(coinSorter, console))
-                .withCommand("Print coin list", new PrintCoinListCommand(coinSorter, console))
-                .withSubMenu("Set details", new Menu.Builder().withHeader("***Set Details Sub-Menu***")
+                .withCommand("Print coin list", new DisplayDenominationsCommand(coinSorter, console))
+                .withSubMenu("Set details", new Menu.Builder().withHeaderText("***Set Details Sub-Menu***")
                         .withCommand("Set currency", new SetCurrencyCommand(coinSorter, console))
                         .withCommand("Set minimum coin input value", new SetMinimumValueCommand(coinSorter, console))
                         .withCommand("Set maximum coin input value", new SetMaximumValueCommand(coinSorter, console))
@@ -33,6 +39,9 @@ public class CoinSorterUi {
         menuStack.push(menu);
     }
 
+    /**
+     * Shows the user interface.
+     */
     public void show() {
         while (menuStack.isEmpty() == false) {
             final Menu currentMenu = menuStack.peek();

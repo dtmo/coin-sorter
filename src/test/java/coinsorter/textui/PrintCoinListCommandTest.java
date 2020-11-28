@@ -13,7 +13,7 @@ class PrintCoinListCommandTest {
         final CoinSorter coinSorter = Mockito.spy(new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10)));
         final Console console = Mockito.spy(Console.getDefault());
 
-        final PrintCoinListCommand command = new PrintCoinListCommand(coinSorter, console);
+        final DisplayDenominationsCommand command = new DisplayDenominationsCommand(coinSorter, console);
 
         command.execute();
 

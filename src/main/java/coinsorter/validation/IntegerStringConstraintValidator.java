@@ -1,6 +1,13 @@
 package coinsorter.validation;
 
+/**
+ * IntegerStringConstraintValidator validates that a string value is parsable as
+ * an integer.
+ */
 public class IntegerStringConstraintValidator implements ConstraintValidator<String> {
+    /**
+     * A static instance for convenience.
+     */
     public static final IntegerStringConstraintValidator INSTANCE = new IntegerStringConstraintValidator();
 
     @Override
