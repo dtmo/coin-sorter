@@ -45,7 +45,7 @@ public class MakeLooseChangeCommand implements Command {
                                 + "\nPlease enter a denomination value to exclude: ",
                                 List.of(new EnumerationConstraintValidator<>(coinSorter.getDenominations())));
 
-                final LooseChange result = coinSorter.convertToDenominations(totalValue, denominationValue);
+                final LooseChange result = coinSorter.multiCoinCalculator(totalValue, denominationValue);
                 console.print("The coins exchanged are: ");
                 console.print(coinSorter.getDenominations().stream().sorted(Comparator.reverseOrder())
                                 .map(denomination -> result.getDenominationQuantity(denomination) + " x " + denomination

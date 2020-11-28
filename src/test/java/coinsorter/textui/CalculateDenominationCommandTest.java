@@ -19,6 +19,6 @@ class CalculateDenominationCommandTest {
 
         command.execute();
 
-        Mockito.verify(coinSorter, Mockito.times(1)).convertToDenomination(Mockito.eq(5432), Mockito.eq(10));
+        Mockito.verify(coinSorter, Mockito.times(1)).coinCalculator(Mockito.eq(5432), Mockito.eq(10));
     }
 }

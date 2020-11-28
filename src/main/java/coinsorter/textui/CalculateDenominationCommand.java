@@ -39,7 +39,7 @@ public class CalculateDenominationCommand implements Command {
                                 "Please enter the denomination into which to calculate: ",
                                 List.of(new MinimumValueConstraintValidator(0)));
 
-                final LooseChange result = coinSorter.convertToDenomination(totalValue, denominationValue);
+                final LooseChange result = coinSorter.coinCalculator(totalValue, denominationValue);
 
                 final int denominationQuantity = result.getDenominationQuantity(denominationValue);
                 console.println("A total of " + denominationQuantity + " x " + denominationValue

@@ -74,7 +74,7 @@ class CoinSorterTest {
     void testConvertToDenomination() throws Exception {
         final CoinSorter coinSorter = new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10));
 
-        final LooseChange result = coinSorter.convertToDenomination(5432, 20);
+        final LooseChange result = coinSorter.coinCalculator(5432, 20);
 
         assertEquals(5420, result.getValue());
         assertEquals(271, result.getDenominationQuantity(20));
@@ -84,7 +84,7 @@ class CoinSorterTest {
     void testConvertToDenominations() throws Exception {
         final CoinSorter coinSorter = new CoinSorter("GBP", 0, 10000, Set.of(200, 100, 50, 20, 10));
 
-        final LooseChange result = coinSorter.convertToDenominations(5432, 20);
+        final LooseChange result = coinSorter.multiCoinCalculator(5432, 20);
 
         assertEquals(5430, result.getValue());
         assertEquals(27, result.getDenominationQuantity(200));

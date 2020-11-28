@@ -19,6 +19,6 @@ class MakeLooseChangeCommandTest {
 
         command.execute();
 
-        Mockito.verify(coinSorter, Mockito.times(1)).convertToDenominations(Mockito.eq(5432), Mockito.eq(10));
+        Mockito.verify(coinSorter, Mockito.times(1)).multiCoinCalculator(Mockito.eq(5432), Mockito.eq(10));
     }
 }
