@@ -76,7 +76,7 @@ class CoinSorterTest {
 
         final LooseChange result = coinSorter.coinCalculator(5432, 20);
 
-        assertEquals(5420, result.getValue());
+        assertEquals(5420, result.getTotalValue());
         assertEquals(271, result.getDenominationQuantity(20));
     }
 
@@ -86,7 +86,7 @@ class CoinSorterTest {
 
         final LooseChange result = coinSorter.multiCoinCalculator(5432, 20);
 
-        assertEquals(5430, result.getValue());
+        assertEquals(5430, result.getTotalValue());
         assertEquals(27, result.getDenominationQuantity(200));
         assertEquals(0, result.getDenominationQuantity(100));
         assertEquals(0, result.getDenominationQuantity(50));

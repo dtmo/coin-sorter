@@ -12,10 +12,11 @@ import java.util.Set;
  */
 public class LooseChange {
     /**
-     * Calculates the quantities of each denomination to, as closely as possible,
-     * represent the given total value. If the specified denominations cannot
-     * represent the total value exactly, then they will represent the nearest value
-     * that is not greater than the specified total value.
+     * Creates a new instance of LooseChange representing, as closely as possible, a
+     * given total value using a specified set of denominations. If the specified
+     * denominations cannot represent the total value precisely, then the created
+     * LooseChange instance will represent the nearest value that is not greater
+     * than the specified total value.
      * 
      * @param value         The target total value to represent with the specified
      *                      denominations.
@@ -24,7 +25,7 @@ public class LooseChange {
      * @return A new LooseChange instance that represents the quantities of
      *         denominations used.
      */
-    public static LooseChange toDenominations(final int value, final Set<Integer> denominations) {
+    public static LooseChange from(final int value, final Set<Integer> denominations) {
         List<Integer> orderedDenominations = new ArrayList<>(denominations);
         Collections.sort(orderedDenominations, Collections.reverseOrder());
 
@@ -46,21 +47,35 @@ public class LooseChange {
     private final Map<Integer, Integer> coins;
     private final int value;
 
+    /**
+     * Constructs a new instance of LooseChange.
+     * 
+     * @param coins A Map of denominations and quantities describing the loose
+     *              change.
+     */
     public LooseChange(final Map<Integer, Integer> coins) {
         this.coins = coins;
         this.value = coins.entrySet().stream().mapToInt(entry -> entry.getKey() * entry.getValue()).sum();
     }
 
-    public int getValue() {
+    /**
+     * Returns the total value of the loose change.
+     * 
+     * @return The total value of the loose change.
+     */
+    public int getTotalValue() {
         return value;
     }
 
+    /**
+     * Returns the quantity of a denomination present in the loose change. If the
+     * specified denomination does not exist in the loose change then 0 is returned.
+     * 
+     * @param denomination The denomination for which to return the quantity.
+     * @return The quantity of the denomination present in the loose change.
+     */
     public int getDenominationQuantity(final Integer denomination) {
         return coins.getOrDefault(denomination, 0);
-    }
-
-    public LooseChange toDenominations(final Set<Integer> denominations) {
-        return toDenominations(value, denominations);
     }
 
     @Override
@@ -91,19 +106,5 @@ public class LooseChange {
     @Override
     public String toString() {
         return "LooseChange [coins=" + coins + "]";
-    }
-
-    public static class Builder {
-        private Map<Integer, Integer> coins = new HashMap<>();
-
-        public Builder withDenominations(final Integer denomination, final int quantity) {
-            coins.merge(denomination, quantity, (oldValue, newValue) -> oldValue += newValue);
-
-            return this;
-        }
-
-        public LooseChange build() {
-            return new LooseChange(new HashMap<>(coins));
-        }
     }
 }

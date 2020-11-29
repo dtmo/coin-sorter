@@ -143,7 +143,7 @@ public class CoinSorter {
     public LooseChange coinCalculator(final int value, final int denominationValue) throws IllegalArgumentException {
         validateTotalCoinValue(value);
 
-        final LooseChange looseChange = LooseChange.toDenominations(value, Set.of(denominationValue));
+        final LooseChange looseChange = LooseChange.from(value, Set.of(denominationValue));
 
         return looseChange;
     }
@@ -165,7 +165,7 @@ public class CoinSorter {
             throws IllegalArgumentException {
         validateTotalCoinValue(value);
 
-        final LooseChange looseChange = LooseChange.toDenominations(value, denominations.stream()
+        final LooseChange looseChange = LooseChange.from(value, denominations.stream()
                 .filter(denomination -> denomination != excludedDenomination).collect(Collectors.toSet()));
 
         return looseChange;

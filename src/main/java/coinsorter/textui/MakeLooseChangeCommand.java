@@ -52,7 +52,7 @@ public class MakeLooseChangeCommand implements Command {
                                                 + "p")
                                 .collect(Collectors.joining(", ")));
                 console.print(" with a remainder of ");
-                console.print(totalValue - result.getValue());
+                console.print(totalValue - result.getTotalValue());
                 console.println("p");
         }
 }

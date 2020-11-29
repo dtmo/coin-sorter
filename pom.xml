@@ -5,6 +5,9 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<name>Coin Sorter</name>
 	<description>An example implementation of a coin sorter</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>

@@ -43,7 +43,7 @@ public class CalculateDenominationCommand implements Command {
 
                 final int denominationQuantity = result.getDenominationQuantity(denominationValue);
                 console.println("A total of " + denominationQuantity + " x " + denominationValue
-                                + "p coins can be exchanged, with a remainder of " + (totalValue - result.getValue())
+                                + "p coins can be exchanged, with a remainder of " + (totalValue - result.getTotalValue())
                                 + "p");
         }
 }

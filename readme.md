@@ -14,9 +14,4 @@ The *LooseChange* class represents an amount of loose change. Since the remainde
 
 The *LooseChange* class then just needs to represent the denominations used and the quantity of each. This can be implemented as a *Map* keyed with denomination values and the quantity stored against each denomination.
 
-```plantuml
-class LooseChange {
-    coins: Map<Integer, Integer>
-}
-```
 
